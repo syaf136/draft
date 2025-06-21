@@ -68,9 +68,6 @@ with st.sidebar:
 
 st.markdown("<h1 class='centered'>💳 Credit Card Fraud Detection System</h1>", unsafe_allow_html=True)
 
-# --- DISTANCE FUNCTION ---
-def haversine(lat1, lon1, lat2, lon2):
-    return geodesic((lat1, lon1), (lat2, lon2)).km
 
 # --- SINGLE TRANSACTION MODE ---
 if mode == "🔘 Single Transaction":
