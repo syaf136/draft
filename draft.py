@@ -65,7 +65,9 @@ with st.sidebar:
     mode = st.radio("Select Mode", ["🔘 Single Transaction", "📁 Upload CSV"])
     st.markdown("---")
     st.caption("👤 Created by Ikhfa | 📅 2025")
-    
+
+st.markdown("<h1 class='centered'>💳 Credit Card Fraud Detection System</h1>", unsafe_allow_html=True)
+
 # --- DISTANCE FUNCTION ---
 def haversine(lat1, lon1, lat2, lon2):
     return geodesic((lat1, lon1), (lat2, lon2)).km
