@@ -11,7 +11,7 @@ st.markdown("""
     <style>
     /* Entire page background */
     [data-testid="stAppViewContainer"] {
-        background-color: #0172a9; /* soft pastel blue */
+        background-color: #d0a86e; /* soft pastel blue */
     }
 
     /* Sidebar */
