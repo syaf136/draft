@@ -5,6 +5,31 @@ from geopy.distance import geodesic
 
 # --- Page config ---
 st.set_page_config(page_title="Fraud Detection System", page_icon="💳", layout="centered")
+st.set_page_config(page_title="Fraud Detection System", page_icon="💳", layout="centered")
+
+# 🔧 Add background styling
+st.markdown("""
+    <style>
+    /* Background color for main view */
+    [data-testid="stAppViewContainer"] {
+        background-color: #f7f9fc;
+    }
+
+    /* Sidebar background */
+    [data-testid="stSidebar"] {
+        background-color: #ffffff;
+    }
+
+    /* Header bar */
+    [data-testid="stHeader"] {
+        background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    }
+
+    /* Remove Streamlit watermark (for demo only, not for deployment) */
+    footer {visibility: hidden;}
+    </style>
+""", unsafe_allow_html=True)
+
 
 # --- CSS Styling ---
 st.markdown("""
