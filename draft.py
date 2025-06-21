@@ -5,95 +5,77 @@ from geopy.distance import geodesic
 
 # --- Page config ---
 st.set_page_config(page_title="Fraud Detection System", page_icon="💳", layout="centered")
-st.set_page_config(page_title="Fraud Detection System", page_icon="💳", layout="centered")
 
-# 🔧 Add background styling
+# --- CUSTOM CSS for pastel theme ---
 st.markdown("""
     <style>
-    /* Background color for main view */
+    /* Entire page background */
     [data-testid="stAppViewContainer"] {
-        background-color: #f7f9fc;
+        background-color: #e3f2fd; /* soft pastel blue */
     }
 
-    /* Sidebar background */
+    /* Sidebar */
     [data-testid="stSidebar"] {
         background-color: #ffffff;
+        border-right: 1px solid #d1d1d1;
     }
 
     /* Header bar */
     [data-testid="stHeader"] {
-        background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+        background: linear-gradient(to right, #d7efff, #bae1ff);
     }
 
-    /* Remove Streamlit watermark (for demo only, not for deployment) */
-    footer {visibility: hidden;}
+    /* Cards */
+    .card {
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0px 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 20px;
+    }
+
+    /* Result Boxes */
+    .fraud {
+        background-color: #ffe6e6;
+        padding: 15px;
+        border-radius: 10px;
+        border-left: 5px solid #e53935;
+    }
+
+    .legit {
+        background-color: #e0f7e9;
+        padding: 15px;
+        border-radius: 10px;
+        border-left: 5px solid #43a047;
+    }
+
+    /* Centered text */
+    .centered {
+        text-align: center;
+        font-size: 18px;
+        color: #444;
+        margin-bottom: 20px;
+    }
     </style>
 """, unsafe_allow_html=True)
 
-
-# --- CSS Styling ---
-st.markdown("""
-    <style>
-        .main-title {
-            text-align: center;
-            color: #ffffff;
-            padding: 10px;
-            border-radius: 10px;
-            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-        }
-        .subtext {
-            text-align: center;
-            font-size: 16px;
-            margin-bottom: 10px;
-            color: #444444;
-        }
-        .box {
-            background-color: #f5f5f5;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #dddddd;
-        }
-        .result-box {
-            background-color: #e3f2fd;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 5px solid #2196F3;
-        }
-        .fraud {
-            background-color: #ffebee;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 5px solid #f44336;
-        }
-        .legit {
-            background-color: #e8f5e9;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 5px solid #4CAF50;
-        }
-    </style>
-""", unsafe_allow_html=True)
-
-# --- Sidebar ---
+# --- SIDEBAR ---
 with st.sidebar:
     st.title("⚙️ Options")
     mode = st.radio("Select Mode", ["🔘 Single Transaction", "📁 Upload CSV"])
     st.markdown("---")
-    st.write("👤 Created by: Your Name")
-    st.write("📅 Final Year Project 2025")
+    st.caption("👤 Created by Your Name | 📅 FYP 2025")
 
-# --- Title ---
-st.markdown("<h1 class='main-title'>💳 Credit Card Fraud Detection System</h1>", unsafe_allow_html=True)
-st.markdown("<p class='subtext'>Simulate fraud prediction using a single transaction or batch upload.</p>", unsafe_allow_html=True)
-st.markdown("<hr>", unsafe_allow_html=True)
+# --- TITLE ---
+st.markdown("<h1 class='centered'>💳 Fraud Detection System (Prototype)</h1>", unsafe_allow_html=True)
 
-# --- Helper function ---
+# --- DISTANCE FUNCTION ---
 def haversine(lat1, lon1, lat2, lon2):
     return geodesic((lat1, lon1), (lat2, lon2)).km
 
-# --- Single Transaction Form ---
+# --- SINGLE TRANSACTION MODE ---
 if mode == "🔘 Single Transaction":
-    st.markdown("<div class='box'>", unsafe_allow_html=True)
+    st.markdown("<div class='card'>", unsafe_allow_html=True)
     st.subheader("📥 Enter Transaction Details")
 
     col1, col2 = st.columns(2)
@@ -108,7 +90,7 @@ if mode == "🔘 Single Transaction":
         day = st.slider("Transaction Day", 1, 31, 15)
         month = st.slider("Transaction Month", 1, 12, 6)
 
-    st.markdown("📍 **Location Information**")
+    st.markdown("📍 **Location Details**")
     col3, col4 = st.columns(2)
     with col3:
         lat = st.number_input("User Latitude", format="%.6f")
@@ -124,32 +106,33 @@ if mode == "🔘 Single Transaction":
         if merchant and category and cc_num:
             prediction = random.choice([0, 1])
             confidence = round(random.uniform(70, 99.9), 2)
-            result = "Fraudulent Transaction" if prediction == 1 else "Legitimate Transaction"
 
-            # Styled result box
+            # Styled result
             if prediction == 1:
                 st.markdown(f"""
                 <div class='fraud'>
-                <h4>🚨 Prediction: Fraudulent Transaction</h4>
-                Confidence Score: <b>{confidence}%</b><br>
-                Distance to Merchant: <b>{distance:.2f} km</b>
+                    <h4>🚨 Fraudulent Transaction</h4>
+                    <b>Confidence:</b> {confidence:.2f}%<br>
+                    <b>Distance to Merchant:</b> {distance:.2f} km
                 </div>
                 """, unsafe_allow_html=True)
             else:
                 st.markdown(f"""
                 <div class='legit'>
-                <h4>✅ Prediction: Legitimate Transaction</h4>
-                Confidence Score: <b>{confidence}%</b><br>
-                Distance to Merchant: <b>{distance:.2f} km</b>
+                    <h4>✅ Legitimate Transaction</h4>
+                    <b>Confidence:</b> {confidence:.2f}%<br>
+                    <b>Distance to Merchant:</b> {distance:.2f} km
                 </div>
                 """, unsafe_allow_html=True)
         else:
             st.warning("⚠️ Please complete all required fields.")
 
-# --- Batch Upload ---
+# --- BATCH UPLOAD MODE ---
 else:
-    st.subheader("📤 Upload Transaction File (CSV only)")
-    uploaded_file = st.file_uploader("Choose your file", type=["csv", "xlsx"])
+    st.markdown("<div class='card'>", unsafe_allow_html=True)
+    st.subheader("📤 Upload CSV File")
+
+    uploaded_file = st.file_uploader("Choose a file", type=["csv", "xlsx"])
 
     if uploaded_file:
         try:
@@ -159,9 +142,10 @@ else:
                 df = pd.read_excel(uploaded_file)
 
             st.success("✅ File uploaded successfully!")
+            st.write("📄 Preview of Data:")
             st.dataframe(df.head())
 
-            if st.button("📊 Run Dummy Fraud Detection"):
+            if st.button("📊 Predict Fraud (Simulated)"):
                 df['Prediction'] = [random.choice(["Fraud", "Legit"]) for _ in range(len(df))]
                 df['Confidence (%)'] = [round(random.uniform(70, 99.9), 2) for _ in range(len(df))]
 
@@ -171,4 +155,5 @@ else:
                 csv = df.to_csv(index=False).encode('utf-8')
                 st.download_button("📥 Download Results", data=csv, file_name="fraud_predictions.csv", mime="text/csv")
         except Exception as e:
-            st.error(f"❌ Failed to read file: {e}")
+            st.error(f"❌ Error reading file: {e}")
+    st.markdown("</div>", unsafe_allow_html=True)
