@@ -4,7 +4,7 @@ import random
 from geopy.distance import geodesic
 
 # --- Page config ---
-st.set_page_config(page_title="Fraud Detection System", page_icon="💳", layout="centered")
+st.set_page_config(page_title="Credit Card Fraud Detection System", page_icon="💳", layout="centered")
 
 # --- CUSTOM CSS for pastel theme ---
 st.markdown("""
@@ -64,11 +64,8 @@ with st.sidebar:
     st.title("⚙️ Options")
     mode = st.radio("Select Mode", ["🔘 Single Transaction", "📁 Upload CSV"])
     st.markdown("---")
-    st.caption("👤 Created by Your Name | 📅 FYP 2025")
-
-# --- TITLE ---
-st.markdown("<h1 class='centered'>💳 Fraud Detection System (Prototype)</h1>", unsafe_allow_html=True)
-
+    st.caption("👤 Created by Ikhfa | 📅 2025")
+    
 # --- DISTANCE FUNCTION ---
 def haversine(lat1, lon1, lat2, lon2):
     return geodesic((lat1, lon1), (lat2, lon2)).km
